@@ -13,17 +13,23 @@ import java.util.Map;
 public class AuthController {
     @Autowired
     UserService userService;
-    @PostMapping("/sign-up-user-classic")
-    public void createUserClassic (@RequestBody User user){
+
+    @PostMapping("/sign-up-user")
+    public void createUser (@RequestBody User user){
         User result = userService.createUser(user);
+        userService.addRoleToUser(result.getEmail(), RoleName.USER);
+    }
+    /*@PostMapping("/sign-up-user-classic")
+    public void createUserClassic (@RequestBody User user){
+        User result = userService.createUserClassic(user);
         userService.addRoleToUser(result.getEmail(), RoleName.USER_CLASSIC);
     }
 
     @PostMapping("/sign-up-user-premium")
     public void createUserPremium (@RequestBody User user){
-        User result = userService.createUser(user);
+        User result = userService.createUserPremium(user);
         userService.addRoleToUser(result.getEmail(), RoleName.USER_PREMIUM);
-    }
+    }*/
     @PostMapping("/sign-up-admin")
     public void createAdmin (@RequestBody User user){
         User result = userService.createUser(user);
