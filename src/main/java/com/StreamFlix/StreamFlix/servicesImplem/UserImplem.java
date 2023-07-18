@@ -35,11 +35,11 @@ public class UserImplem implements UserService {
     @Override
     public User createUser(User user) {
         String lastname = user.getLastname();
-        String firtname = user.getFirstname();
+        String firstname = user.getFirstname();
         String password = user.getPassword();
         String passwordEncoded = passwordEncoder.encode(password);
         user.setLastname(lastname);
-        user.setFirstname(firtname);
+        user.setFirstname(firstname);
         user.setPassword(passwordEncoded);
         return userRepository.save(user);
     }
