@@ -34,11 +34,31 @@ public class UserImplem implements UserService {
 
     @Override
     public User createUser(User user) {
+        String lastname = user.getLastname();
+        String firtname = user.getFirstname();
+        String password = user.getPassword();
+        String passwordEncoded = passwordEncoder.encode(password);
+        user.setLastname(lastname);
+        user.setFirstname(firtname);
+        user.setPassword(passwordEncoded);
+        return userRepository.save(user);
+    }
+
+    /*@Override
+    public User createUserPremium(User user) {
         String password = user.getPassword();
         String passwordEncoded = passwordEncoder.encode(password);
         user.setPassword(passwordEncoded);
         return userRepository.save(user);
     }
+
+    @Override
+    public User createUserClassic(User user) {
+        String password = user.getPassword();
+        String passwordEncoded = passwordEncoder.encode(password);
+        user.setPassword(passwordEncoded);
+        return userRepository.save(user);
+    }*/
 
     @Override
     public List<User> getAllUser() {

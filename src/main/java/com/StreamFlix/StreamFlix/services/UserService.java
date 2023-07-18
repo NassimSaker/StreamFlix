@@ -8,9 +8,12 @@ import java.util.Optional;
 
 public interface UserService {
     User createUser (User user);
+
+    /*User createUserPremium (User user);
+    User createUserClassic (User user);*/
+
     List<User> getAllUser();
     Optional<User> getUserByEmail(String email);
     void addRoleToUser (String email, RoleName roleName);
     String login (String email, String password);
-
 }
