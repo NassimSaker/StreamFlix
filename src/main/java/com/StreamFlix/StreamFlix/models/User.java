@@ -35,6 +35,17 @@ public class User implements UserDetails {
     }
     )
     List<Role> roles = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "favorite_list",
+            joinColumns = {
+                    @JoinColumn(name = "user_id")
+            },inverseJoinColumns = {
+            @JoinColumn(name = "film_id")
+    }
+    )
+    List<Film> films = new ArrayList<>();
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
