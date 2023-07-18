@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("categories")
@@ -26,6 +27,7 @@ public class CategoryController {
 
     @GetMapping("")
     public ResponseEntity<List<Category>>getAllCategories() {
+
         return new ResponseEntity<>(
                 categoryService.getAllCategories(),
                 HttpStatus.OK);
@@ -33,8 +35,8 @@ public class CategoryController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getCategoryById (@PathVariable Long id){
-        Category category = categoryService.getCategoryById(id);
-        if (category != null)
+        Optional<Category> category = categoryService.getCategoryById(id);
+        if (category.isPresent())
             return new ResponseEntity<>(
                     category,
                     HttpStatus.OK
@@ -61,14 +63,15 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCategory (@PathVariable Long id){
-        Category category = categoryService.getCategoryById(id);
-        if (category!=null)
+    public ResponseEntity<?> deleteById (@PathVariable Long id){
+        Optional<Category> category = categoryService.getCategoryById(id);
+        if (category.isPresent()) {
+            categoryService.deleteById(id);
             return new ResponseEntity<>(
-                    category,
+                    "Categorie bien supprimé",
                     HttpStatus.OK
             );
-        else
+        }else
             return new ResponseEntity<>(
                     HttpStatus.NOT_FOUND
             );

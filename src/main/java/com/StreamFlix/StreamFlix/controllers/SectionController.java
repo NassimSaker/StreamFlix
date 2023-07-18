@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("sections")
@@ -17,7 +18,7 @@ public class SectionController {
     SectionService sectionService;
 
     @PostMapping("/add")
-    public ResponseEntity<Section> createFilm (@RequestBody Section section){
+    public ResponseEntity<Section> createSection (@RequestBody Section section){
         return new ResponseEntity<>(
                 sectionService.createSection(section),
                 HttpStatus.CREATED
@@ -25,7 +26,7 @@ public class SectionController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<Section>> getAllSection() {
+    public ResponseEntity<List<Section>> getAllSections() {
         return new ResponseEntity<>(
                 sectionService.getAllSections(),
                 HttpStatus.OK);
@@ -33,8 +34,8 @@ public class SectionController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getSectionById (@PathVariable Long id){
-        Section section = sectionService.getSectionById(id);
-        if (section != null)
+        Optional<Section> section = sectionService.getSectionById(id);
+        if (section.isPresent())
             return new ResponseEntity<>(
                     section,
                     HttpStatus.OK
@@ -61,13 +62,15 @@ public class SectionController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteSection (@PathVariable Long id){
-        Section section = sectionService.getSectionById(id);
-        if (section!=null)
+    public ResponseEntity<?> deleteById (@PathVariable Long id){
+        Optional<Section> section = sectionService.getSectionById(id);
+        if (section.isPresent()) {
+            sectionService.deleteById(id);
             return new ResponseEntity<>(
+                    "Section bien supprimé",
                     HttpStatus.OK
             );
-        else
+        } else
             return new ResponseEntity<>(
                     HttpStatus.NOT_FOUND
             );

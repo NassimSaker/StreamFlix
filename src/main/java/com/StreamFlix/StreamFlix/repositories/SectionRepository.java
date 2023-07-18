@@ -2,7 +2,7 @@ package com.StreamFlix.StreamFlix.repositories;
 
 
 import com.StreamFlix.StreamFlix.models.Section;
-import com.StreamFlix.StreamFlix.models.User;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,4 +14,5 @@ public interface SectionRepository extends JpaRepository<Section, Long> {
     Section save (Section section);
     Optional<Section> findById (Long id);
     List<Section> findAll();
+    void deleteById (Long id);
 }

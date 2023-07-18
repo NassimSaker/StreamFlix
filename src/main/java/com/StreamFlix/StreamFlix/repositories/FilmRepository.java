@@ -1,5 +1,6 @@
 package com.StreamFlix.StreamFlix.repositories;
 
+import com.StreamFlix.StreamFlix.models.Category;
 import com.StreamFlix.StreamFlix.models.Film;
 import com.StreamFlix.StreamFlix.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,4 +14,6 @@ public interface FilmRepository extends JpaRepository<Film, Long> {
     Film save (Film film);
     Optional<Film> findById(Long id);
     List<Film> findAll();
+
+    void deleteById (Long id);
 }

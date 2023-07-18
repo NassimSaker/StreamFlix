@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("films")
@@ -34,8 +35,8 @@ public class FilmController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getFilmById (@PathVariable Long id){
-        Film film = filmService.getFilmById(id);
-        if (film != null)
+        Optional<Film> film = filmService.getFilmById(id);
+        if (film.isPresent())
             return new ResponseEntity<>(
                     film,
                     HttpStatus.OK
@@ -62,14 +63,15 @@ public class FilmController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteFilm (@PathVariable Long id){
-        Film film = filmService.getFilmById(id);
-        if (film!=null)
+    public ResponseEntity<?> deleteById (@PathVariable Long id){
+        Optional<Film> film = filmService.getFilmById(id);
+        if (film.isPresent()) {
+            filmService.deleteById(id);
             return new ResponseEntity<>(
-                    film,
+                    "film bien supprimé",
                     HttpStatus.OK
             );
-        else
+        }else
             return new ResponseEntity<>(
                     HttpStatus.NOT_FOUND
             );
